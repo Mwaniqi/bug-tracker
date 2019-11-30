@@ -1,0 +1,25 @@
+const express = require('express');
+const router = express.Router();
+let Bug = require('./bug.model')
+
+/* GET home page. */
+router.get('/', (req, res, next) => {
+  Bug.find()
+    .then(bugs => res.json(bugs))
+    .catch(err => res.status(400).json(`error: ${err}`))
+});
+
+// POST new bug
+router.post('/new', (req, res, next) => {
+  const newBug = {
+    description: req.body.description,
+    assigned: req.body.assigned
+  }
+
+  Bug.create(newBug, (err, bug) => {
+    if (err) return res.status(400).json(`error: ${err}`)
+    res.status(400).json(`error: ${err}`)
+  })
+})
+
+module.exports = router;

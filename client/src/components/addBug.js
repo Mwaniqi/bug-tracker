@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import {BugContext} from './bugContext'
 
 function AddBug() {
   const [bug, setBug] = useState('')
+  // consume bugs array state
+  const [bugs, setBugs] = useContext(BugContext)
 
   const handleChange = (e) => {
     const bugInfo = {[e.target.name]: e.target.value}
@@ -10,6 +13,7 @@ function AddBug() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // post data to db
     const response = await fetch('http://localhost:5000/new', {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -17,7 +21,9 @@ function AddBug() {
     })
     const data = await response.json()
 
-    if(response.status !== 200) throw ('error posting: ', data.error)
+    if(response.status !== 200) throw ('error: ', data.error)
+    // update bugs array with db data, triggers bugs list rerender
+    setBugs(prevBugs => [...prevBugs, data])
   }
 
   return (

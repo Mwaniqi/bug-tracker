@@ -1,22 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, {useContext } from 'react'
+import {BugContext} from './bugContext'
 
 function Bugs() {
-  const [bugs, setBugs] = useState([])
-  // initial bugs fetch
-  useEffect(() => {
-    getBugs()
-  }, [])
+  // consume bugs array state
+  const [bugs] = useContext(BugContext)
 
-  const getBugs = async () => {
-    const response = await fetch('http://localhost:5000/')
-    const data = await response.json()
-    if(response.status !== 200) throw (data.message)
-    console.log(data)
-    // update state
-    setBugs(data)
-  }
-
-  if(!bugs) return <h1>No bugs found</h1>
+  if(!bugs.length) return <h1>No bugs found</h1>
 
   return (
     <ul>

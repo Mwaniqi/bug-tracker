@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {BugContext} from './bugContext'
+import { Form, Button, TextArea } from 'semantic-ui-react'
 
 function AddBug() {
   const [bug, setBug] = useState('')
-  // consume bugs array state
+  // consume bugs array state from Context
   const [bugs, setBugs] = useContext(BugContext)
 
   const handleChange = (e) => {
@@ -24,16 +25,21 @@ function AddBug() {
     if(response.status !== 200) throw ('error: ', data.error)
     // update bugs array with db data, triggers bugs list rerender
     setBugs(prevBugs => [...prevBugs, data])
+    // clear textarea by resetting bug state
+    setBug({description: ''})
   }
 
   return (
-    <article className='form-add_bug'>
+    <article className='b-shadow pad'>
       <h3>Add a bug</h3>
-      <form onSubmit={handleSubmit}>
-        <textarea rows='6' cols='25' name='description' placeholder='Describe issue' required
-        onChange={handleChange}></textarea>
-        <button className='btn-add_bug' type='submit'>Add</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Field 
+          value={bug.description}
+          placeholder='Describe...' name='description'
+          control={TextArea} rows='6' onChange={handleChange} />
+        <Button compact color='blue' content='Add' />
+      </Form>
+      
     </article>    
   )
 }

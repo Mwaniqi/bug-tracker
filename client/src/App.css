@@ -1,16 +1,32 @@
 .App {
-  text-align: center;
+  background-color: rgb(236, 244, 255);
+  min-height: 100vh;
 }
-
 .App-header {
-  background-color: #282c34;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  background: rgb(48, 47, 47);
+  padding: 10px, 0;
 }
-
-.App-link {
-  color: #09d3ac;
+nav {
+  padding: 10px;
+  max-width: 800px;
+  color: white;
+  margin: 0 auto;
+}
+.main-container { 
+  max-width: 800px;
+  margin: 1em auto;
+}
+.pad{
+  padding: 16px !important;
+}
+.grid.column {
+  max-width: 650px;
+}
+.b-shadow {
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  border-radius: 5px;
+}
+.content {
+  margin-bottom: .5em;
 }

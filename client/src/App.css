@@ -27,6 +27,16 @@ nav {
   background-color: #fff;
   border-radius: 5px;
 }
-.content {
+/* main .item {
+  margin-bottom: 1em;
+  background-color:#f0f8ff82;
+  padding: .75em;
+  border-radius: 4px;
+} */
+.content, .ui.list > .item [class*="right floated"] {
   margin-bottom: .5em;
+}
+small.content {
+  display: inline-block;
+  color: #757575;
 }

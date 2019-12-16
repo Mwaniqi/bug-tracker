@@ -12,8 +12,8 @@ router.get('/', (req, res, next) => {
 // POST new bug
 router.post('/new', (req, res, next) => {
   const newBug = {
-    description: req.body.description,
-    assigned: req.body.assigned
+    // summary: req.body.summary,
+    description: req.body.description
   }
 
   Bug.create(newBug, (err, bug) => {
@@ -29,7 +29,7 @@ router.put('/edit/:id', (req, res, next) => {
   })
 });
 // delete a bug
-router.delete('/:id', (req, res, next) => {
+router.delete('/delete/:id', (req, res, next) => {
   Bug.findByIdAndRemove(req.params.id, (err) => {
     if (err) return res.status(400).json(`error: ${err}`)
     res.json('delete successful')

@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 // POST new bug
 router.post('/new', (req, res, next) => {
   const newBug = {
-    // summary: req.body.summary,
+    summary: req.body.summary,
     description: req.body.description
   }
 

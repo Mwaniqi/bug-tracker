@@ -24,6 +24,7 @@ function Bugs() {
       {bugs.map(bug => {
         return <List.Item as='article' key={bug._id} id={bug._id}>
           <List.Content as='small'><strong>id: {bugs.indexOf(bug)+1}</strong></List.Content>
+          <List.Content as='p'><strong>{bug.summary}</strong></List.Content>
           <List.Content as='p'>{bug.description}</List.Content>
           <List.Content floated='right'>
             <Button basic compact className='mini' color='teal' content='Close' />

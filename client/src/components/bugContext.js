@@ -14,6 +14,7 @@ export const BugProvider = (props) => {
     const data = await response.json()
     if(response.status !== 200) throw (data.message)
     console.log(data)
+    if(!data.length) return <h1>No bugs found</h1>
     // update state
     setBugs(data)
   }

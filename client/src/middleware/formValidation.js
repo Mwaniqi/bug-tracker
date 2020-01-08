@@ -1,5 +1,5 @@
 import React, {useContext } from 'react'
-import {BugContext} from '../components/bugContext'
+import {BugContext} from '../components/BugContext'
 
 export function useFormValidation(initialState, validate) {
   // consume bugs array state from Context
@@ -24,7 +24,6 @@ export function useFormValidation(initialState, validate) {
   // }, [errors])
 
   const handleChange = (e) => {
-    // const bugInfo = {[e.target.name]: e.target.value}
     setValues({...values, [e.target.name]: e.target.value})
   }
 
@@ -62,6 +61,18 @@ export function validate(values) {
 
   if(!values.description) {
     errors.description = 'Description required'
+  }
+
+  if(!values.email) {
+    errors.email = 'email required'
+  }
+
+  if(!values.password) {
+    errors.password = 'password required'
+  }
+
+  if(!values.passwordConfirm) {
+    errors.passwordConfirm = 'confirm password'
   }
 
   return errors

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } =require('express-validator')
 let Bug = require('./bug.model')
 
 /* GET home page. */
@@ -10,7 +11,17 @@ router.get('/', (req, res, next) => {
 });
 
 // POST new bug
-router.post('/new', (req, res, next) => {
+router.post('/new', 
+  // validation & sanitization
+  [
+    body(['summary', 'description']).notEmpty().trim().escape()
+  ], (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    console.log('errors:', errors)
+    return res.status(422).json({errors: errors.array()})
+  }
+
   const newBug = {
     summary: req.body.summary,
     description: req.body.description
@@ -21,13 +32,13 @@ router.post('/new', (req, res, next) => {
     res.json(bug)
   })
 });
-// PUT update a bug
-router.put('/edit/:id', (req, res, next) => {
-  Bug.findByIdAndUpdate(req.params.id, req.body, (err, updatedBug) => {
-    if (err) return res.status(400).json(`error: ${err}`)
-    res.json(updatedBug)
-  })
-});
+// // PUT update a bug
+// router.put('/edit/:id', (req, res, next) => {
+//   Bug.findByIdAndUpdate(req.params.id, req.body, (err, updatedBug) => {
+//     if (err) return res.status(400).json(`error: ${err}`)
+//     res.json(updatedBug)
+//   })
+// });
 // delete a bug
 router.delete('/delete/:id', (req, res, next) => {
   Bug.findByIdAndRemove(req.params.id, (err) => {

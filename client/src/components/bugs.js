@@ -1,12 +1,10 @@
 import React, {useContext } from 'react'
-import {BugContext} from './bugContext'
-import { List, Button } from 'semantic-ui-react'
+import {BugContext} from './BugContext'
+import { List, Button, Grid } from 'semantic-ui-react'
 
 function Bugs() {
   // consume bugs array state
   const [bugs, setBugs] = useContext(BugContext)
-
-  if(!bugs.length) return <h1>No bugs found</h1>
 
   const handleDel = async (e) => {
     e.persist()
@@ -20,6 +18,7 @@ function Bugs() {
   }
 
   return (
+    <Grid.Column as='section' centered='true' width={9}>
     <List className='pad b-shadow' divided relaxed>
       {bugs.map(bug => {
         return <List.Item as='article' key={bug._id} id={bug._id}>
@@ -32,7 +31,8 @@ function Bugs() {
           </List.Content>
         </List.Item>
       })}
-    </List>      
+    </List>
+    </Grid.Column>     
   )
 }
 

@@ -1,13 +1,14 @@
 import React from 'react'
 import { useFormValidation, validate } from '../middleware/formValidation'
-import { Form, Button, TextArea, Input } from 'semantic-ui-react'
+import { Grid, Form, Button, TextArea, Input } from 'semantic-ui-react'
 
 function AddBug() {
   const INITIAL_STATE = {summary: '', description: ''}
   const { handleChange, handleSubmit, values, errors, submitting } = useFormValidation(INITIAL_STATE, validate)
 
   return (
-    <article className='b-shadow pad'>
+    <Grid.Column as='section' centered='true' width={7}>
+    <div className='b-shadow pad'>
       <h3>Add a bug</h3>
       <Form onSubmit={handleSubmit}>
        <Form.Field 
@@ -22,8 +23,8 @@ function AddBug() {
           className={ errors.description && 'error'} />
         <Button disabled={submitting} compact color='blue' content='Add' />
       </Form>
-      
-    </article>    
+    </div>
+    </Grid.Column>    
   )
 }
 

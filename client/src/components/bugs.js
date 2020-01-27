@@ -18,7 +18,7 @@ function Bugs() {
   }
 
   return (
-    <Grid.Column as='section' centered='true' width={9}>
+    <Grid.Column as='section' width={9}>
     <List className='pad b-shadow' divided relaxed>
       {bugs.map(bug => {
         return <List.Item as='article' key={bug._id} id={bug._id}>

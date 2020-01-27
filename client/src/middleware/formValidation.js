@@ -25,6 +25,7 @@ export function useFormValidation(initialState, validate) {
 
   const handleChange = (e) => {
     setValues({...values, [e.target.name]: e.target.value})
+    console.log(values)
   }
 
   const handleSubmit = async (e) => {
@@ -49,7 +50,7 @@ export function useFormValidation(initialState, validate) {
     setValues(initialState)
   }
 
-  return {values, errors, submitting, handleChange, handleSubmit}
+  return {values, setValues, errors, submitting, handleChange, handleSubmit}
 }
 
 export function validate(values) {
@@ -63,16 +64,16 @@ export function validate(values) {
     errors.description = 'Description required'
   }
 
-  if(!values.email) {
-    errors.email = 'email required'
+  if(!values.username) {
+    errors.username = 'username required'
   }
 
   if(!values.password) {
     errors.password = 'password required'
   }
 
-  if(!values.passwordConfirm) {
-    errors.passwordConfirm = 'confirm password'
+  if(!values.confirmPassword) {
+    errors.confirmPassword = 'confirm password'
   }
 
   return errors

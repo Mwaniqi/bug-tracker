@@ -8,19 +8,19 @@ function Login() {
   const { handleChange, values, errors } = useFormValidation(INITIAL_STATE, validate)
   
   return(
-  <Grid padded centered='true'>
+  <Grid padded centered>
     <Grid.Column as='section' className='form-width'>
     <div className='b-shadow pad'>
       <Header as='h3' textAlign='center' block>Login</Header>
       <Form >
         <Form.Field 
-          value={values.email || ''} label='Email'
-          placeholder='email' name='email'
+          value={values.email || ''} label='Username'
+          placeholder='email' name='username'
           control={Input} onChange={handleChange}
           className={ errors.email && 'error'} />
         <Form.Field 
           value={values.password || ''} label='Password'
-          placeholder='password...' name='password'
+          placeholder='password...' name='password' type='password'
           control={Input} onChange={handleChange}
           className={ errors.password && 'error'} />
         <Button fluid color='blue' content='login' />

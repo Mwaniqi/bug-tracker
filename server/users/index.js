@@ -22,7 +22,7 @@ router.post('/register',
     }
 
     User.create(newUser, (err, user) => {
-      let error = err.message
+      let error = err.errmsg
       if(error.includes('duplicate') && error.includes('index: username_1 dup key')) {
         return res.status(500).json({errmsg: 'Username taken'})
       }

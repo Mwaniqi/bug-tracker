@@ -1,11 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import { Grid, Form, Button, Input, Header, Divider } from 'semantic-ui-react'
-import { useFormValidation, validate } from '../middleware/formValidation'
+import { useFormValidation } from '../middleware/formValidation'
 
 function Login() {
   const INITIAL_STATE = {email: '', password: '', confirmPassword: ''}
-  const { handleChange, values, errors } = useFormValidation(INITIAL_STATE, validate)
+  // eslint-disable-next-line
+  const { handleChange, values, errors, validate } = useFormValidation(INITIAL_STATE)
   
   return(
   <Grid padded centered>

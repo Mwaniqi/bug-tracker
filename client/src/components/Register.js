@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import { Grid, Form, Button, Input, Message, Header, Divider } from 'semantic-ui-react'
-import { useFormValidation } from '../middleware/formValidation'
+import { useFormValidation } from '../shared/formValidation'
 
 function Register() {
   const INITIAL_STATE = {username: '', password: '', confirmPassword: ''}
@@ -21,14 +21,20 @@ function Register() {
     })
 
     const res = await response.json()
-    if(response.status === 500) {
-      // eslint-disable-next-line
-      setMessage({['err']: res.errmsg})
-    } else if(response.status !== 200) {
-      setMessage('fail')
-    } else {
-      setValues(INITIAL_STATE)
+    try {
+      if(response.status === 500) {
+        // eslint-disable-next-line
+        setMessage({['err']: res.errmsg})
+      } else if(response.status !== 200) {
+        setMessage('fail')
+      } else {
+        setValues(INITIAL_STATE)
+        setMessage({})
+      }      
+    } catch (error) {
+      console.log(error)
     }
+
   }
   
   return( 

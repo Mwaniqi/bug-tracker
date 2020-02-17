@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import {BugContext} from '../components/BugContext'
-import { useFormValidation } from '../middleware/formValidation'
+import { useFormValidation } from '../shared/formValidation'
 import { Grid, Form, Button, TextArea, Input, Message } from 'semantic-ui-react'
 
 function AddBug() {

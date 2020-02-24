@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } =require('express-validator')
 let Bug = require('./bug.model')
+const { isLoggedIn } = require('../middleware/auth')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

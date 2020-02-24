@@ -41,8 +41,6 @@ export function useFormValidation(initialState) {
     if (errors[e.target.name]) delete errors[e.target.name]
 
     setValues({...values, [e.target.name]: e.target.value})
-    console.log(values)
-    console.log('errors..', errors)
   }
   return {values, setValues, submitting, handleChange, handleBlur, errors, setErrors, validate}
 }

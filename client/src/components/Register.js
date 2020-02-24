@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import {Link, withRouter} from 'react-router-dom'
 import { Grid, Form, Button, Input, Message, Header, Divider } from 'semantic-ui-react'
 import { useFormValidation } from '../shared/formValidation'
+import { UserContext } from './UserContex'
 
-function Register() {
+function Register(props) {
   const INITIAL_STATE = {username: '', password: '', confirmPassword: ''}
   const { handleChange, handleBlur, values, setValues, validate, errors, setErrors } = useFormValidation(INITIAL_STATE)
   const [message, setMessage] = useState({})
+  const [user, setUser] = useContext(UserContext)
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -28,13 +30,16 @@ function Register() {
       } else if(response.status !== 200) {
         setMessage('fail')
       } else {
+        console.log(res)
+        setUser(res.username)
+        sessionStorage.setItem('token', JSON.stringify(res.token))
         setValues(INITIAL_STATE)
         setMessage({})
+        props.history.push('/')
       }      
     } catch (error) {
       console.log(error)
     }
-
   }
   
   return( 
@@ -70,4 +75,4 @@ function Register() {
   )
 }
 
-export default Register
+export default withRouter(Register)

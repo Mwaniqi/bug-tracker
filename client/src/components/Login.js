@@ -1,9 +1,11 @@
-import React, { useState }  from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useContext }  from 'react'
+import { Link, withRouter } from 'react-router-dom'
 import { Grid, Form, Button, Input, Header, Divider, Message } from 'semantic-ui-react'
 import { useFormValidation } from '../shared/formValidation'
+import { UserContext } from './UserContex'
 
-function Login() {
+function Login(props) {
+  const [user, setUser] = useContext(UserContext)
   const INITIAL_STATE = {username: '', password: ''}
   // eslint-disable-next-line
   const { handleChange, handleBlur, values, setValues, validate, errors, setErrors } = useFormValidation(INITIAL_STATE)
@@ -22,14 +24,21 @@ function Login() {
     })
 
     const res = await response.json()
-    if(response.status === 400 || response.status === 401) {
-      // eslint-disable-next-line
-      setMessage({['err']: res.errmsg})
-    } else if(response.status !== 200) {
-      setMessage('fail')
-    } else {
-      setValues(INITIAL_STATE)
-      setMessage({})
+    try {
+      if(response.status === 404 || response.status === 401) {
+        // eslint-disable-next-line
+        setMessage({['err']: res.errmsg})
+      } else if(response.status !== 200) {
+        setMessage('fail')
+      } else {
+        setUser(res.username)
+        sessionStorage.setItem('token', JSON.stringify(res.token))
+        setValues(INITIAL_STATE)
+        setMessage({})
+        props.history.push('/')
+      }      
+    } catch (error) {
+      console.log(error)
     }
   }
   
@@ -61,4 +70,4 @@ function Login() {
   )
 }
 
-export default Login
+export default withRouter(Login)

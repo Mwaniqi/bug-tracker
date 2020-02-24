@@ -5,12 +5,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './components/Home';
 import Register from './components/Register'
 import Login from './components/Login'
-import {BugProvider} from './components/BugContext'
+import { UserProvider } from './components/UserContex'
 
 function App() {
   return (
     <BrowserRouter>
-    <BugProvider>
+    <UserProvider>
     <div className="App">
       <header className="App-header">
         <Nav />
@@ -26,10 +26,11 @@ function App() {
           <Route path='/login'>
             <Login />
           </Route>
+          <Route path='*' component={() => '404 Not Found'} />
         </Switch>
       </main>
     </div>
-    </BugProvider>
+    </UserProvider>
     </BrowserRouter>
   );
 }

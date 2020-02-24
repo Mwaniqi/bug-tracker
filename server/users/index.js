@@ -23,12 +23,11 @@ router.post('/register',
     }
 
     User.create(newUser, (err, user) => {
-      if (err) {
-        if(err.errmsg.includes('duplicate') && err.errmsg.includes('index: username_1 dup key')) {
-          return res.status(500).json({errmsg: 'Username taken'})
-        }
+      if(err.errmsg.includes('duplicate') && err.errmsg.includes('index: username_1 dup key')) {
+        return res.status(500).json({errmsg: 'Username taken'})
       }
-      res.json(user)
+      const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
+      res.header('auth-token', token).json({ username: user.username, token})
     })
 });
 
@@ -44,19 +43,19 @@ router.post('/login',
     
     User.findOne({username: req.body.username}, async (err, user) => {
       if(err) return res.status(500).json({errmsg: 'Error logging in'})
-      // if(!user) return res.status(400).json({errmsg: 'Invalid username/password'})
+      if(!user) return res.status(404).json({errmsg: 'Username not found'})
 
       const validPassword = await bcrypt.compare(req.body.password, user.password)
       console.log(validPassword)
-      if(!user || !validPassword) return res.status(401).json({auth: false, token: null, errmsg: 'Invalid username / password'})
+      if(!validPassword) return res.status(401).json({auth: false, token: null, errmsg: 'Invalid username / password'})
       // issue token on valid pw
       const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
-      res.header('auth-token', token).json({id: user._id})
+      res.header('auth-token', token).json({ username: user.username, token})
     })
 });
 
-router.post('/logout', (req, res, next) => {
-  res.json('logged out')
+router.get('/logout', (req, res, next) => {
+  res.json({token: null, message: 'logged out'})
 });
 
 module.exports = router;

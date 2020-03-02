@@ -7,7 +7,7 @@
 - Server API built on Express and Mongo:
 	[x] data validation
 	[x]	user registration
-	[ ] JWT authentication and authorization
+	[x] JWT authentication and authorization
 
 ### Running the app
  - `clone` the repo

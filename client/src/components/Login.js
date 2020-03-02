@@ -5,9 +5,9 @@ import { useFormValidation } from '../shared/formValidation'
 import { UserContext } from './UserContex'
 
 function Login(props) {
-  const [user, setUser] = useContext(UserContext)
+  // eslint-disable-next-line 
+  const [ user, setUser] = useContext(UserContext)
   const INITIAL_STATE = {username: '', password: ''}
-  // eslint-disable-next-line
   const { handleChange, handleBlur, values, setValues, validate, errors, setErrors } = useFormValidation(INITIAL_STATE)
   const [message, setMessage] = useState({})
 

@@ -1,11 +1,14 @@
 import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
 import {BugContext} from '../components/BugContext'
 import { useFormValidation } from '../shared/formValidation'
+import { UserContext } from './UserContex'
 import { Grid, Form, Button, TextArea, Input, Message } from 'semantic-ui-react'
 
 function AddBug() {
+  const [user] = useContext(UserContext)
   // consume bugs array state from Context
-  // eslint-disable-next-line
+  // eslint-disable-next-line 
   const [bugs, setBugs] = useContext(BugContext)
   const [message, setMessage] = useState(null)
   const INITIAL_STATE = {summary: '', description: ''}
@@ -18,10 +21,12 @@ function AddBug() {
     setErrors(validationErrors)
     // setSubmitting(true)
 
+    const token = JSON.parse(sessionStorage.getItem('token'))
+
     // post data to db
     const response = await fetch('http://localhost:5000/new', {
       method: "post",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Authorization': token},
       body: JSON.stringify(values)
     })
     const data = await response.json()
@@ -38,21 +43,24 @@ function AddBug() {
   return (
     <Grid.Column as='section' centered='true' width={7}>
     <div className='b-shadow pad'>
-      <h3>Add a bug</h3>
-      {message && <Message visible error relaxed='true' content={message} />}
-      <Form onSubmit={handleSubmit}>
-       <Form.Field 
-          value={values.summary || ''} label='Summary'
-          placeholder='Issue summary' name='summary'
-          control={Input} onChange={handleChange} onBlur={handleBlur}
-          className={ errors.summary && 'error'} />
-        <Form.TextArea 
-          value={values.description || ''} label='Description'
-          placeholder='Issue description...' name='description'
-          control={TextArea} rows='6' onChange={handleChange} onBlur={handleBlur}
-          className={ errors.description && 'error'} />
-        <Button disabled={submitting} compact color='blue' content='Add' />
-      </Form>
+      {user ? 
+      <>
+        <h3>Add a bug</h3>
+        {message && <Message visible error relaxed='true' content={message} />}
+        <Form onSubmit={handleSubmit}>
+          <Form.Field 
+            value={values.summary || ''} label='Summary'
+            placeholder='Issue summary' name='summary'
+            control={Input} onChange={handleChange} onBlur={handleBlur}
+            className={ errors.summary && 'error'} />
+          <Form.TextArea 
+            value={values.description || ''} label='Description'
+            placeholder='Issue description...' name='description'
+            control={TextArea} rows='6' onChange={handleChange} onBlur={handleBlur}
+            className={ errors.description && 'error'} />
+          <Button disabled={submitting} compact color='blue' content='Add' />
+        </Form>
+      </> : <p><Link to="/login"><Button compact className='small' color='blue' content='New bug' /></Link></p>}
     </div>
     </Grid.Column>    
   )

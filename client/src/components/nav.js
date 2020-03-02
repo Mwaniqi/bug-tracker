@@ -14,9 +14,11 @@ function Nav(props) {
     })
 
     // const res = await response.json()
-    sessionStorage.removeItem('token')
-    setUser(null)
-    props.history.push('/')
+    if (response.status === 200) {
+      sessionStorage.removeItem('token')
+      setUser(null)
+      props.history.push('/')
+    }
   }
 
   return( 

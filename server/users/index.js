@@ -23,7 +23,7 @@ router.post('/register',
     }
 
     User.create(newUser, (err, user) => {
-      if(err.errmsg.includes('duplicate') && err.errmsg.includes('index: username_1 dup key')) {
+      if(err && err.errmsg.includes('duplicate') && err.errmsg.includes('index: username_1 dup key')) {
         return res.status(500).json({errmsg: 'Username taken'})
       }
       const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET)
@@ -55,6 +55,7 @@ router.post('/login',
 });
 
 router.get('/logout', (req, res, next) => {
+  req.headers.authorization = null
   res.json({token: null, message: 'logged out'})
 });
 

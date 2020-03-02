@@ -8,7 +8,8 @@ function Register(props) {
   const INITIAL_STATE = {username: '', password: '', confirmPassword: ''}
   const { handleChange, handleBlur, values, setValues, validate, errors, setErrors } = useFormValidation(INITIAL_STATE)
   const [message, setMessage] = useState({})
-  const [user, setUser] = useContext(UserContext)
+  // eslint-disable-next-line 
+  const [ user, setUser ] = useContext(UserContext)
 
   const handleRegister = async (e) => {
     e.preventDefault()

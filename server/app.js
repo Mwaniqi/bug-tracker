@@ -6,19 +6,25 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const compression = require('compression')
+const helmet = require('helmet')
 
 const bugsRouter = require('./bugs/index');
 const usersRouter = require('./users/index');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/bugTracker', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/bugTracker', {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('**** Database connected! ***')
 });
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(helmet());
+app.use(compression());
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -42,7 +48,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({'error': err});
 });
 
 module.exports = app;

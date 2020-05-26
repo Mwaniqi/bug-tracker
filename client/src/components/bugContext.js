@@ -4,24 +4,26 @@ export const BugContext = createContext()
 
 export const BugProvider = (props) => {
   const [bugs, setBugs] = useState([])
+  const [loading, setLoading] = useState(null)
+
   // initial bugs fetch
   useEffect(() => {
     getBugs()
+    setLoading(true)
   }, [])
 
   const getBugs = async () => {
-    const response = await fetch('http://localhost:5000/')
+    const response = await fetch(process.env.REACT_APP_APIURL)
     const data = await response.json()
     if(response.status !== 200) throw (data.message)
-    console.log(data)
-    if(!data.length) return <h1>No bugs found</h1>
     // update state
     setBugs(data)
+    setLoading(null)
   }
 
   return (
     // pass the state to every contained component
-    <BugContext.Provider value={[bugs, setBugs]}>
+    <BugContext.Provider value={[bugs, setBugs, loading]}>
       {props.children}
     </BugContext.Provider>
   )

@@ -2,17 +2,18 @@ import React, {useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { BugContext } from './BugContext'
 import { UserContext } from './UserContex'
-import { List, Button, Grid, Transition, Popup } from 'semantic-ui-react'
+import { List, Button, Grid, Transition, Popup, Loader, Header } from 'semantic-ui-react'
 
 function Bugs() {
-  const [user] = useContext(UserContext)
+  const [user, ] = useContext(UserContext)
   // consume bugs array state
-  const [bugs, setBugs] = useContext(BugContext)
+  const [bugs, setBugs, loading] = useContext(BugContext)
+
   const handleDel = async (e) => {
     e.persist()
     const token = JSON.parse(sessionStorage.getItem('token'))
     const id = e.target.closest('.item').id
-    const response = await fetch('http://localhost:5000/delete/'+id, {
+    const response = await fetch(process.env.REACT_APP_APIURL+'/delete/'+id, {
       method: "delete",
       headers: { "Content-Type": "application/json", 'Authorization': token}
     })
@@ -21,15 +22,18 @@ function Bugs() {
       console.log(res)
     } 
     if (response.status === 200) {
-      setBugs(bugs.filter(bug => bug._id !== id))      
+      setBugs(bugs.filter(bug => bug._id !== id))
     }
     console.log(res)
   }
 
+
   return (
     <Grid.Column as='section' width={9}>
       <Transition.Group as={List} className='pad b-shadow' divided relaxed  animation='fade down' duration={300}>
-        {bugs.map(bug => {
+        {loading ? <Loader inline='centered' size='small' /> :
+          bugs.length < 1 ? <Header as='h3' textAlign='center'>No bugs</Header>
+         : bugs.map(bug => {
           return (
             <List.Item as='article' key={bug._id} id={bug._id}>
               <List.Content as='small'><strong>id: {bugs.indexOf(bug)+1}</strong></List.Content>

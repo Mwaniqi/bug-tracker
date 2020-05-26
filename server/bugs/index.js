@@ -44,7 +44,7 @@ router.post('/new', verifyToken,
 
 // delete a bug
 router.delete('/delete/:id', verifyToken, (req, res, next) => {
-  Bug.findByIdAndRemove(req.params.id, (err) => {
+  Bug.deleteOne({_id: req.params.id}, (err) => {
     if (err) return res.status(400).json(`error: ${err}`)
     res.json('delete successful')
   })

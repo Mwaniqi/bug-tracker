@@ -17,7 +17,7 @@ function Login(props) {
     setErrors(validationErrors)
 
     // post user data to db
-    const response = await fetch('http://localhost:5000/users/login', {
+    const response = await fetch(process.env.REACT_APP_APIURL+'/users/login', {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values)

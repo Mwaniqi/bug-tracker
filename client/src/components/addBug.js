@@ -24,7 +24,7 @@ function AddBug() {
     const token = JSON.parse(sessionStorage.getItem('token'))
 
     // post data to db
-    const response = await fetch('http://localhost:5000/new', {
+    const response = await fetch(process.env.REACT_APP_APIURL+'/new', {
       method: "post",
       headers: { "Content-Type": "application/json", 'Authorization': token},
       body: JSON.stringify(values)

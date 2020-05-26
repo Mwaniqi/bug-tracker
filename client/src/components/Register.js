@@ -17,7 +17,7 @@ function Register(props) {
     setErrors(validationErrors)
 
     // post user data to db
-    const response = await fetch('http://localhost:5000/users/register', {
+    const response = await fetch(process.env.REACT_APP_APIURL+'/users/register', {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values)

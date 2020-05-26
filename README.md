@@ -1,15 +1,17 @@
 <h2 align="center">An issue tracking application built with React and Node</h2>
 
+<a href="http://bugtrack.surge.sh/">Live preview</a>
+
 ### Features
 - Basic CRUD actions where a user can create and delete an issue
 - React front-end with functional components and Hooks
 - Local state management via Context
-- Server API built on Express and Mongo:
-	[x] data validation
-	[x]	user registration
+- Server API built on Express and Mongo:\
+	[x] data validation\
+	[x]	user registration\
 	[x] JWT authentication and authorization
 
-### Running the app
+### Running the app locally
  - `clone` the repo
  - run `npm install`
  - `cd server` and `mongod`
